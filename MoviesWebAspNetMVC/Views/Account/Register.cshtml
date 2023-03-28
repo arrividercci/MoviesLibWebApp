@@ -1,0 +1,33 @@
+﻿@model MoviesWebAspNetMVC.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Реєстрація</h1>
+<form method="post" asp-controller="Account" asp-action="Register">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div>
+        <label class="control-label" asp-for="Email"></label><br />
+        <input class="form-control" asp-for="Email" />
+        <span class="text-danger" asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label class="control-label" asp-for="Name"></label><br />
+        <input class="form-control" asp-for="Name" />
+        <span class="text-danger" asp-validation-for="Name"></span>
+    </div>
+    <div>
+        <label class="control-label" asp-for="Password"></label><br />
+        <input class="form-control" asp-for="Password" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <div>
+        <label class="control-label" asp-for="PasswordConfirm"></label><br />
+        <input class="form-control" asp-for="PasswordConfirm" />
+        <span class="text-danger" asp-validation-for="PasswordConfirm"></span>
+    </div>
+    <div>
+        <input class="btn btn-primary" type="submit" value="Реєстрація" />
+    </div>
+</form>
+

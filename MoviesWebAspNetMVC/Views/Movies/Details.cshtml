@@ -1,0 +1,67 @@
+﻿@model MoviesWebAspNetMVC.Models.Movie
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Докладніше</h1>
+
+<div class="card mb-3" style="height:500px">
+    <div class="row g-0">
+        <div class="col-md-4">
+            <img src="/images/@Model.PicturePath" style="height:499px"  class="img-fluid rounded-start" alt="image">
+        </div>
+        <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title"><a asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a></h5>
+                <p class="card-text"><small class="text-muted">@Html.DisplayNameFor(model => model.Genre): <a asp-controller="Genres" asp-action="Details" asp-route-id="@Model.Genre.Id">@Model.Genre.Name</a></small></p>
+                <p class="card-text"><small class="text-muted">@Html.DisplayNameFor(model => model.Country): <a asp-controller="Countries" asp-action="Details" asp-route-id="@Model.Country.Id">@Model.Country.Name</a></small></p>
+                <p class="card-text"><small class="text-muted">@Html.DisplayNameFor(model => model.Author): <a asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Author.Id">@Model.Author.FullName()</a></small></p>
+                <p class="card-text">@Model.Description</p>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end" style="position:absolute; bottom:5px; left:5px; right:5px;">
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(RolesString.AdminRole))
+                    {
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary me-md-2">Редагувати</a>
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-primary">Видалити</a>
+                    }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(RolesString.UserRole))
+                    {
+                        <a asp-controller="Recensions" asp-action="Create" asp-route-movieId="@Model.Id" class="btn btn-primary">Додати до списку</a>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div><br />
+<h2>Рецензії</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Користувач
+            </th>
+            <th>
+                Коментар
+            </th>
+            <th>
+                Оцінка
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var recension in ViewBag.Comments)
+        {
+            <tr>
+                <td>
+                    @recension.UserName
+                </td>
+                <td>
+                    @recension.Comment
+                </td>
+                <td>
+                    @recension.RateId
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

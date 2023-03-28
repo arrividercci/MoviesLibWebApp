@@ -1,0 +1,24 @@
+﻿<div>
+    <h3>Оберіть excel-файл для заватаження</h3>
+    @using (Html.BeginForm("ImportXL", "Movies", FormMethod.Post, new { enctype = "multipart/form-data", id = "frm-excel" }))
+    {
+        <div>
+            Завантажте Excel-файл:
+            <input type="file" name="fileExcel" id="fileExcel" />
+            <div>
+                <input type="submit" value="Завантажити" />
+            </div>
+        </div>
+    }
+</div>
+
+<div>
+    <form asp-action="ExportXl">
+        <h3>Завантаження інформації у файл</h3>
+        <div class="form-group">
+            <label for="fileExcel" class="form-label">Фільми</label>
+            <select name="moviesIds" class="form-select" multiple="" asp-items="ViewBag.MoviesId"></select>
+        </div>
+         <input class="btn btn-primary mt-2" type="submit" value="Вивантажити" />
+    </form>
+</div>

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MoviesWebAspNetMVC.Models.Movie>
+
+@{
+    ViewData["Title"] = "Details";
+}
+<h1>Фільми, у яких країна-виробник @ViewData["CountryName"]</h1>
+<div class="container overflow-hidden text-center">
+    <div class="row gy-5">
+        @foreach (var item in Model)
+        {
+            <div class="col-6">
+                <div class="p-3">
+                    <div class="card mb-3" style="height:300px; max-width:800px; vertical-align:0 auto;">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/images/@item.PicturePath" style="height:299px" class="img-fluid rounded-start" alt="image">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a asp-controller="Movies" asp-action="Details" asp-route-id="@item.Id">@item.Name</a></h5>
+                                    <p class="card-text" style="-webkit-line-clamp: 6; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;">@item.Description</p>
+                                    <p class="card-text"><small class="text-muted">@Html.DisplayNameFor(model => model.Genre): <a asp-controller="Genres" asp-action="Details" asp-route-id="@item.Genre.Id">@item.Genre.Name</a></small></p>
+                                    @*<p class="card-text"><small class="text-muted">@Html.DisplayNameFor(model => model.Country): <a asp-controller="Countries" asp-action="Details" asp-route-id="@item.Country.Id">@item.Country.Name</a></small></p>
+                                    <p class="card-text"><small class="text-muted">@Html.DisplayNameFor(model => model.Author): <a asp-controller="Authors" asp-action="Details" asp-route-id="@item.Author.Id">@item.Author.FullName()</a></small></p>*@
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole(RolesString.AdminRole))
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

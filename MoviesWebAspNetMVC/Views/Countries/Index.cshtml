@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MoviesWebAspNetMVC.Models.Country>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Країни</h1>
+@if (User.Identity.IsAuthenticated && User.IsInRole(RolesString.AdminRole))
+{
+    <p>
+        <a asp-action="Create">Додати країну</a>
+    </p>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(RolesString.AdminRole))
+                    {
+                        <a asp-action="Редагувати" asp-route-id="@item.Id">Редагувати</a>
+                    }
+                    <a asp-action="Деталі" asp-route-id="@item.Id">Деталі</a>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole(RolesString.AdminRole))
+                    {
+                        <a asp-action="Видалити" asp-route-id="@item.Id">Видалити</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

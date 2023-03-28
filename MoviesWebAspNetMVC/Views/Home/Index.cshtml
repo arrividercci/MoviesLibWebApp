@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">ZanxiTV</h1>
+    <p>Читайте про свої улюблені фільми та створюйте власні колекції.</p>
+</div>
+
+<div class="container">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-sm-3">
+        <div class="col" id="chart1"></div>
+        <div class="col" id="chart2"></div>
+        <div class="col" id="chart3"></div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+            google.charts.load('current', { 'packages': ['corechart'] });
+            google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            $.get('/api/Chart/JsonMoviesByGenreData', function (JsonData) {
+            var data = new google.visualization.arrayToDataTable(JsonData, false);
+            var option = {
+                title: 'Співвідношення кількості фільмів та жанрів',
+                width: 500,
+                height: 400
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('chart1'));
+            chart.draw(data, option);
+            })
+
+            $.get('/api/Chart/JsonMoviesByAuthorsData', function (JsonData) {
+            var data = new google.visualization.arrayToDataTable(JsonData, false);
+            var option = {
+                title: 'Співвідношення кількості фільмів та авторів',
+                width: 500,
+                height: 400
+            };
+            var chart = new google.visualization.BarChart(document.getElementById('chart2'));
+            chart.draw(data, option);
+            })
+
+            $.get('/api/Chart/JsonMoviesByCountryData', function (JsonData) {
+                var data = new google.visualization.arrayToDataTable(JsonData, false);
+                var option = {
+                    title: 'Співвідношення кількості фільмів та країн',
+                    width: 500,
+                    height: 400
+                };
+                var chart = new google.visualization.LineChart(document.getElementById('chart3'));
+                chart.draw(data, option);
+            })
+        }
+    </script>
+}
