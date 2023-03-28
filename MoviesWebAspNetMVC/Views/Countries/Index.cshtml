@@ -32,7 +32,7 @@
                     {
                         <a asp-action="Редагувати" asp-route-id="@item.Id">Редагувати</a>
                     }
-                    <a asp-action="Деталі" asp-route-id="@item.Id">Деталі</a>
+                    <a asp-action="Details" asp-route-id="@item.Id">Деталі</a>
                     @if (User.Identity.IsAuthenticated && User.IsInRole(RolesString.AdminRole))
                     {
                         <a asp-action="Видалити" asp-route-id="@item.Id">Видалити</a>
